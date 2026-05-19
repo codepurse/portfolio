@@ -1,16 +1,57 @@
 import Head from "next/head";
+import { useEffect, useState } from "react";
 import {
   CountUp,
   CursorDot,
   Grain,
+  NAME,
   SiteFooter,
   SiteNav,
   useScrollReveal,
-  NAME,
 } from "../../components/site";
+
+const GP_ID = "com.everbible.app";
+const GP_API = `/api/gp-stats?id=${GP_ID}`;
+
+const FALLBACK = {
+  installs: "100+",
+  translations: 6,
+  studies: 14,
+};
+
+function useGpStats() {
+  const [data, setData] = useState(FALLBACK);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    let cancelled = false;
+
+    fetch(GP_API)
+      .then((r) => {
+        if (!r.ok) throw new Error(`GP ${r.status}`);
+        return r.json();
+      })
+      .then((d) => {
+        if (cancelled) return;
+        setData({
+          rating: d.rating,
+          reviewCount: d.reviewCount,
+          installText: d.installText || FALLBACK.installs,
+        });
+      })
+      .catch(() => {});
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  return data;
+}
 
 export default function EverbibleCase() {
   useScrollReveal();
+  const gp = useGpStats();
 
   return (
     <>
@@ -64,15 +105,15 @@ export default function EverbibleCase() {
       {/* ─── STATS ─── */}
       <section className="case-stats">
         <div className="stat reveal">
-          <div className="n"><CountUp value={100} /><span className="suf">+</span></div>
+          <div className="n">{gp?.installText ?? FALLBACK.installs}</div>
           <div className="l">Installs</div>
         </div>
         <div className="stat reveal">
-          <div className="n"><CountUp value={6} pad={2} /></div>
+          <div className="n"><CountUp value={FALLBACK.translations} pad={2} /></div>
           <div className="l">Translations</div>
         </div>
         <div className="stat reveal">
-          <div className="n"><CountUp value={14} pad={2} /></div>
+          <div className="n"><CountUp value={FALLBACK.studies} pad={2} /></div>
           <div className="l">Topical Studies</div>
         </div>
         <div className="stat reveal">
@@ -276,16 +317,16 @@ export default function EverbibleCase() {
 
       {/* ─── NEXT PROJECT ─── */}
       <section className="next-project">
-        <div className="np-eyebrow reveal">Back to the Top</div>
-        <a className="np-link reveal" href="/work/blocknsfw">
-          <span className="np-name">BlockNSFW</span>
+        <div className="np-eyebrow reveal">Next Case Study</div>
+        <a className="np-link reveal" href="/work/navixhealth">
+          <span className="np-name">Navix Health</span>
           <span className="np-arrow" aria-hidden>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path d="M5 19L19 5M19 5H8M19 5V16" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </span>
         </a>
-        <div className="np-meta reveal">2025 · Privacy-first content filter</div>
+        <div className="np-meta reveal">2026 · AI-native behavioral health platform site</div>
       </section>
 
       <SiteFooter />

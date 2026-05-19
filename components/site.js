@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
-export const NAME = "Sunny Sharma";
-export const LOCATION = "Mumbai · IND";
+export const NAME = "Alfon Labadan";
+export const LOCATION = "Cavite · PH";
 
 /* ────────────────────────────────────────────────────────────
    Hooks
@@ -15,9 +15,9 @@ export function useClock() {
       const t = d.toLocaleTimeString("en-GB", {
         hour: "2-digit",
         minute: "2-digit",
-        timeZone: "Asia/Kolkata",
+        timeZone: "Asia/Manila",
       });
-      setTime(`${t} IST`);
+      setTime(`${t} PHT`);
     };
     update();
     const id = setInterval(update, 30_000);

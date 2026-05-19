@@ -1,16 +1,73 @@
 import Head from "next/head";
+import { useEffect, useState } from "react";
 import {
   CountUp,
   CursorDot,
   Grain,
+  NAME,
   SiteFooter,
   SiteNav,
   useScrollReveal,
-  NAME,
 } from "../../components/site";
+
+const AMO_API = "/api/amo-stats";
+const CHROME_API = "/api/chrome-stats";
+
+// Static fallback values if APIs fail
+const FALLBACK = {
+  amoUsers: 1907,
+  chromeUsers: 500,
+  rating: 4.6,
+  reviews: 15,
+};
+
+function useCombinedStats() {
+  const [stats, setStats] = useState(FALLBACK);
+
+  useEffect(() => {
+    if (globalThis.window === undefined) return;
+    let cancelled = false;
+
+    const fetchJson = (url) =>
+      fetch(url)
+        .then((r) => (r.ok ? r.json() : null))
+        .catch(() => null);
+
+    Promise.all([fetchJson(AMO_API), fetchJson(CHROME_API)]).then(
+      ([amo, chrome]) => {
+        if (cancelled) return;
+        setStats({
+          amoUsers:
+            typeof amo?.users === "number" && amo.users > 0
+              ? amo.users
+              : FALLBACK.amoUsers,
+          chromeUsers:
+            typeof chrome?.userCount === "number" && chrome.userCount > 0
+              ? chrome.userCount
+              : FALLBACK.chromeUsers,
+          rating:
+            typeof amo?.rating === "number" && amo.rating > 0
+              ? amo.rating
+              : FALLBACK.rating,
+          reviews:
+            typeof amo?.reviews === "number" && amo.reviews > 0
+              ? amo.reviews
+              : FALLBACK.reviews,
+        });
+      }
+    );
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  return stats;
+}
 
 export default function BlockNSFWCase() {
   useScrollReveal();
+  const stats = useCombinedStats();
 
   return (
     <>
@@ -18,7 +75,7 @@ export default function BlockNSFWCase() {
         <title>BlockNSFW — Case Study · {NAME}</title>
         <meta
           name="description"
-          content="Case study: BlockNSFW, a privacy-first content filter for Firefox combining domain blocking, content heuristics, and image scanning."
+          content="Case study: BlockNSFW, a privacy-first content filter for Firefox and Chrome combining domain blocking, content heuristics, and image scanning."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
@@ -46,7 +103,7 @@ export default function BlockNSFWCase() {
         <div className="case-meta rise" style={{ animationDelay: "0.6s" }}>
           <div><span className="k">Role</span><span className="v">Design · Engineering · Ship</span></div>
           <div><span className="k">Year</span><span className="v">2025 — Present</span></div>
-          <div><span className="k">Platform</span><span className="v">Firefox · Android</span></div>
+          <div><span className="k">Platform</span><span className="v">Firefox · Android · Chrome</span></div>
           <div><span className="k">Status</span><span className="v"><span className="dot" /> Live · v1.5.0</span></div>
           <div className="case-meta-link">
             <a
@@ -57,6 +114,15 @@ export default function BlockNSFWCase() {
             >
               View on Mozilla Add-ons ↗
             </a>
+            <span aria-hidden>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+            <a
+              className="link-u"
+              href="https://chromewebstore.google.com/detail/blocknsfw-%E2%80%93-porn-adult-co/fiecjgpoilkhmoieaboolkfmgbnhlhop"
+              target="_blank"
+              rel="noreferrer"
+            >
+              View on Chrome Web Store ↗
+            </a>
           </div>
         </div>
       </header>
@@ -64,20 +130,20 @@ export default function BlockNSFWCase() {
       {/* ─── STATS ─── */}
       <section className="case-stats">
         <div className="stat reveal">
-          <div className="n"><CountUp value={1907} /></div>
-          <div className="l">Active users</div>
+          <div className="n"><CountUp value={stats.amoUsers} /></div>
+          <div className="l">Firefox users</div>
         </div>
         <div className="stat reveal">
-          <div className="n"><CountUp value={4.6} decimals={1} /><span className="suf">/5</span></div>
-          <div className="l">Average rating</div>
+          <div className="n"><CountUp value={stats.chromeUsers} /></div>
+          <div className="l">Chrome users</div>
         </div>
         <div className="stat reveal">
-          <div className="n"><CountUp value={15} /></div>
-          <div className="l">Reviews</div>
+          <div className="n"><CountUp value={stats.rating} decimals={1} /><span className="suf">/5</span></div>
+          <div className="l">AMO rating</div>
         </div>
         <div className="stat reveal">
-          <div className="n"><CountUp value={711} /><span className="suf">kb</span></div>
-          <div className="l">Bundle size</div>
+          <div className="n"><CountUp value={stats.reviews} /></div>
+          <div className="l">AMO reviews</div>
         </div>
       </section>
 
@@ -210,8 +276,8 @@ export default function BlockNSFWCase() {
               <p>
                 Firefox’s WebExtensions APIs are less restrictive, the
                 review process is humane, and the user base is naturally
-                aligned with privacy-first software. Android coverage came
-                free.
+                aligned with privacy-first software. Chrome came after
+                validation — MV3's shared surface made the port quick.
               </p>
             </div>
           </div>
@@ -226,19 +292,19 @@ export default function BlockNSFWCase() {
         </aside>
         <div className="cs-body">
           <h2 className="cs-h reveal">
-            ~2k people use it daily — and tell me about it.
+            Used by thousands across Firefox and Chrome.
           </h2>
           <p className="cs-p reveal">
-            BlockNSFW is live on the Mozilla Add-ons store across Firefox
-            desktop and Android, sitting in the Privacy &amp; Security and
-            Search Tools categories. Reviews skew warm, support emails are
-            manageable, and the v1.5.0 release shipped on schedule three
-            weeks ago.
+            BlockNSFW is live on both the Mozilla Add-ons and Chrome Web Store,
+            sitting in the Privacy &amp; Security and Search Tools categories.
+            Reviews skew warm, support emails are manageable, and the v1.5.0
+            release shipped on schedule three weeks ago.
           </p>
 
           <blockquote className="pullquote reveal">
             “Lightweight, no nonsense, and it actually catches the things
             other blockers miss.”
+            <br />
             <cite>— AMO review</cite>
           </blockquote>
 
@@ -261,7 +327,6 @@ export default function BlockNSFWCase() {
         </aside>
         <div className="cs-body">
           <ul className="next-list">
-            <li className="reveal"><span>—</span> Chrome / Edge port via shared MV3 surface</li>
             <li className="reveal"><span>—</span> Tunable strictness profiles (Focus, Family, Strict)</li>
             <li className="reveal"><span>—</span> Optional sync of custom blocklists across devices</li>
             <li className="reveal"><span>—</span> A small, honest stats page — no analytics, just transparency</li>

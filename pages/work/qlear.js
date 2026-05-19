@@ -1,16 +1,56 @@
 import Head from "next/head";
+import { useEffect, useState } from "react";
 import {
   CountUp,
   CursorDot,
   Grain,
+  NAME,
   SiteFooter,
   SiteNav,
   useScrollReveal,
-  NAME,
 } from "../../components/site";
+
+const GP_ID = "com.qlear.app";
+const GP_API = `/api/gp-stats?id=${GP_ID}`;
+
+const FALLBACK = {
+  installs: "100+",
+  themes: 9,
+};
+
+function useGpStats() {
+  const [data, setData] = useState(FALLBACK);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    let cancelled = false;
+
+    fetch(GP_API)
+      .then((r) => {
+        if (!r.ok) throw new Error(`GP ${r.status}`);
+        return r.json();
+      })
+      .then((d) => {
+        if (cancelled) return;
+        setData({
+          rating: d.rating,
+          reviewCount: d.reviewCount,
+          installText: d.installText || FALLBACK.installs,
+        });
+      })
+      .catch(() => {});
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  return data;
+}
 
 export default function QlearCase() {
   useScrollReveal();
+  const gp = useGpStats();
 
   return (
     <>
@@ -63,11 +103,11 @@ export default function QlearCase() {
       {/* ─── STATS ─── */}
       <section className="case-stats">
         <div className="stat reveal">
-          <div className="n"><CountUp value={100} /><span className="suf">+</span></div>
+          <div className="n">{gp?.installText ?? FALLBACK.installs}</div>
           <div className="l">Installs</div>
         </div>
         <div className="stat reveal">
-          <div className="n"><CountUp value={9} pad={2} /></div>
+          <div className="n"><CountUp value={FALLBACK.themes} pad={2} /></div>
           <div className="l">Themes</div>
         </div>
         <div className="stat reveal">
@@ -75,8 +115,8 @@ export default function QlearCase() {
           <div className="l">Trackers</div>
         </div>
         <div className="stat reveal">
-          <div className="n"><CountUp value={100} /><span className="suf">%</span></div>
-          <div className="l">Local</div>
+          <div className="n">100</div>
+          <div className="l">Local %</div>
         </div>
       </section>
 

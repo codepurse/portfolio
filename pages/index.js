@@ -20,7 +20,7 @@ const TAGLINE = (
     blending editorial restraint with engineered precision.
   </>
 );
-const EMAIL = "hello@yourdomain.com";
+const EMAIL = "alfonlabadan@gmail.com";
 
 // Edit this monthly — the rest of the block stays the same.
 const NOW_UPDATED = "April 2026";
@@ -72,6 +72,13 @@ const PROJECTS = [
     stack: ["Android", "Kotlin", "Offline"],
     year: "2025",
     href: "/work/everbible",
+  },
+  {
+    name: "Navix Health",
+    desc: "An AI-native behavioral health EMR + CRM site. Category positioning, dense product storytelling, and buyer-ready information architecture.",
+    stack: ["Next.js", "Healthcare SaaS", "Web Design"],
+    year: "2026",
+    href: "/work/navixhealth",
   },
 ];
 // ─────────────────────────────────────────────────────────────────────
@@ -306,7 +313,7 @@ export default function Home() {
           </div>
           <div className="count reveal">
             ({String(PROJECTS.length).padStart(2, "0")}) &nbsp; · &nbsp; 2023 —
-            2025
+            2026
           </div>
         </header>
 

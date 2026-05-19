@@ -3,16 +3,16 @@
    ========================================================= */
 
 :root {
-  /* Palette — warm paper, deep ink, single vermilion accent */
-  --paper:      #ECE6D6;
-  --paper-2:    #E4DDC9;
-  --ink:        #14110F;
-  --ink-2:      #3A342E;
-  --ink-mute:   #6B6358;
-  --hairline:   rgba(20, 17, 15, 0.14);
-  --hairline-2: rgba(20, 17, 15, 0.28);
-  --accent:     #C2410C;   // vermilion / burnt orange
-  --accent-2:   #8A2C04;
+  /* Palette — linen paper, espresso ink, plum accent */
+  --paper:      #F5F3EF;
+  --paper-2:    #EBE8E1;
+  --ink:        #1C1917;
+  --ink-2:      #4A4540;
+  --ink-mute:   #8C857A;
+  --hairline:   rgba(28, 25, 23, 0.14);
+  --hairline-2: rgba(28, 25, 23, 0.28);
+  --accent:     #7D4E5B;   // muted plum
+  --accent-2:   #5A3440;
 
   /* Type */
   --f-display: var(--font-display), "Bricolage Grotesque", system-ui, sans-serif;
@@ -180,7 +180,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: non
       width: 7px; height: 7px;
       background: var(--accent);
       border-radius: 50%;
-      box-shadow: 0 0 0 4px rgba(194,65,12,0.12);
+      box-shadow: 0 0 0 4px rgba(125, 78, 91, 0.12);
       flex-shrink: 0;
     }
   }
@@ -584,7 +584,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: non
     translate: -50% -50%;
     background: var(--accent);
     border-radius: 50%;
-    box-shadow: 0 0 0 4px rgba(194, 65, 12, 0.16);
+    box-shadow: 0 0 0 4px rgba(125, 78, 91, 0.16);
     animation: mark-pulse 2.4s ease-in-out infinite;
     z-index: 2;
   }
@@ -606,8 +606,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: non
   to   { rotate: -360deg; }
 }
 @keyframes mark-pulse {
-  0%, 100% { box-shadow: 0 0 0 4px rgba(194, 65, 12, 0.16); }
-  50%      { box-shadow: 0 0 0 8px rgba(194, 65, 12, 0.05); }
+  0%, 100% { box-shadow: 0 0 0 4px rgba(125, 78, 91, 0.16); }
+  50%      { box-shadow: 0 0 0 8px rgba(125, 78, 91, 0.05); }
 }
 
 @media (max-width: 880px) {
@@ -648,7 +648,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: non
     height: 7px;
     background: var(--accent);
     border-radius: 50%;
-    box-shadow: 0 0 0 3px rgba(194, 65, 12, 0.16);
+    box-shadow: 0 0 0 3px rgba(125, 78, 91, 0.16);
     animation: mark-pulse 2.4s ease-in-out infinite;
     flex-shrink: 0;
   }
@@ -677,7 +677,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: non
   &:hover {
     color: var(--ink);
     .avail-dot {
-      box-shadow: 0 0 0 5px rgba(194, 65, 12, 0.18);
+      box-shadow: 0 0 0 5px rgba(125, 78, 91, 0.18);
     }
   }
 }
@@ -1194,7 +1194,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: non
         background: var(--accent);
         border-radius: 50%;
         margin-right: 10px;
-        box-shadow: 0 0 0 4px rgba(194, 65, 12, 0.12);
+        box-shadow: 0 0 0 4px rgba(125, 78, 91, 0.12);
         animation: pulse 2.4s ease-in-out infinite;
       }
     }
@@ -1245,8 +1245,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: non
 }
 
 @keyframes pulse {
-  0%, 100% { box-shadow: 0 0 0 4px rgba(194, 65, 12, 0.12); }
-  50%      { box-shadow: 0 0 0 6px rgba(194, 65, 12, 0.06); }
+  0%, 100% { box-shadow: 0 0 0 4px rgba(125, 78, 91, 0.12); }
+  50%      { box-shadow: 0 0 0 6px rgba(125, 78, 91, 0.06); }
 }
 
 @media (max-width: 880px) {
@@ -1422,7 +1422,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: non
         width: 7px; height: 7px;
         border-radius: 50%;
         background: var(--accent);
-        box-shadow: 0 0 0 4px rgba(194,65,12,0.12);
+        box-shadow: 0 0 0 4px rgba(125, 78, 91, 0.12);
       }
     }
     .case-meta-link {
