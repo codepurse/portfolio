@@ -1,13 +1,20 @@
+import { motion } from "framer-motion";
+import dynamic from "next/dynamic";
 import Head from "next/head";
 import {
-  CountUp,
-  CursorDot,
-  Grain,
-  NAME,
-  SiteFooter,
-  SiteNav,
-  useScrollReveal,
+    CountUp,
+    CursorDot,
+    Grain,
+    NAME,
+    SiteFooter,
+    SiteNav,
+    useScrollReveal,
 } from "../../components/site";
+
+const ProductShowcase = dynamic(() => import("../../component/3d/ProductShowcase"), {
+  ssr: false,
+  loading: () => null,
+});
 
 const STATS = {
   docsSaved: 80,
@@ -40,17 +47,32 @@ export default function NavixHealthCase() {
           ← <a className="link-u" href="/#work">Back to Work</a> &nbsp; / &nbsp; Case Study 04
         </div>
 
-        <h1 className="case-title rise" style={{ animationDelay: "0.2s" }}>
+        <motion.h1
+          className="case-title rise"
+          initial={{ opacity: 0, y: 30, rotateX: -15 }}
+          animate={{ opacity: 1, y: 0, rotateX: 0 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: [0.2, 0.65, 0.3, 0.9] }}
+        >
           Navix Health<span className="amp">.</span>
-        </h1>
+        </motion.h1>
 
-        <p className="case-sub rise" style={{ animationDelay: "0.4s" }}>
+        <motion.p
+          className="case-sub rise"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4, ease: [0.2, 0.65, 0.3, 0.9] }}
+        >
           A client website and product narrative for an <em>AI-native</em>{" "}
           behavioral health platform — built to explain a complex stack without
           falling into generic SaaS noise.
-        </p>
+        </motion.p>
 
-        <div className="case-meta rise" style={{ animationDelay: "0.6s" }}>
+        <motion.div
+          className="case-meta rise"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.6, ease: [0.2, 0.65, 0.3, 0.9] }}
+        >
           <div><span className="k">Role</span><span className="v">Designer · Developer</span></div>
           <div><span className="k">Year</span><span className="v">2026</span></div>
           <div><span className="k">Platform</span><span className="v">Web · B2B SaaS</span></div>
@@ -65,8 +87,16 @@ export default function NavixHealthCase() {
               Visit navixhealth.com ↗
             </a>
           </div>
-        </div>
+        </motion.div>
       </header>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 0.8 }}
+      >
+        <ProductShowcase style={{ height: '60vh' }} />
+      </motion.div>
 
       <section className="case-stats">
         <div className="stat reveal">

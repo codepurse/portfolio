@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+import dynamic from "next/dynamic";
 import Head from "next/head";
 import {
   CursorDot,
@@ -10,6 +12,11 @@ import {
   useClock,
   useScrollReveal,
 } from "../components/site";
+
+const FloatingShapes = dynamic(() => import("../component/3d/FloatingShapes"), {
+  ssr: false,
+  loading: () => null,
+});
 
 // ─── Page-level content ─────────────────────────────────────────────
 const ROLE_LINE1 = "Designer";
@@ -52,6 +59,13 @@ const NOW = {
 };
 
 const PROJECTS = [
+  {
+    name: "WebTrace",
+    desc: "A privacy-first browser history manager for Chrome & Firefox. Search pages, manage favorites, restore closed tabs, review search queries, downloads, clipboard history, bookmarks, and extension activity — all local.",
+    stack: ["WebExtensions", "MV3", "IndexedDB"],
+    year: "2026",
+    href: "/work/webtrace",
+  },
   {
     name: "BlockNSFW",
     desc: "A privacy-first content filter for Firefox. Local heuristics, zero telemetry, ~2k active users.",
@@ -104,6 +118,8 @@ export default function Home() {
 
       {/* ─── HERO ─── */}
       <section className="hero" id="top">
+        <FloatingShapes />
+
         <div className="meta-tl rise" style={{ animationDelay: "0.1s" }}>
           Independent designer
           <br />
@@ -118,7 +134,13 @@ export default function Home() {
         </div>
 
         {/* Rotating studio mark */}
-        <div className="studio-mark rise" style={{ animationDelay: "0.55s" }} aria-hidden>
+        <motion.div
+          className="studio-mark rise"
+          style={{ animationDelay: "0.55s" }}
+          aria-hidden
+          animate={{ rotate: 360 }}
+          transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+        >
           <svg className="mark-ring" viewBox="0 0 240 240">
             <defs>
               <path
@@ -147,7 +169,7 @@ export default function Home() {
           </div>
 
           <span className="mark-dot" />
-        </div>
+        </motion.div>
 
         {/* Vertical availability stamp — pinned to right edge */}
         <a
@@ -165,14 +187,24 @@ export default function Home() {
         </a>
 
         <h1 className="title">
-          <span className="l1">
+          <motion.span
+            className="l1"
+            initial={{ opacity: 0, y: 50, rotateX: -45 }}
+            animate={{ opacity: 1, y: 0, rotateX: 0 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: [0.2, 0.65, 0.3, 0.9] }}
+          >
             {ROLE_LINE1}
             <span className="amp">&amp;</span>
-          </span>
-          <span className="l2">
+          </motion.span>
+          <motion.span
+            className="l2"
+            initial={{ opacity: 0, y: 50, rotateX: -45 }}
+            animate={{ opacity: 1, y: 0, rotateX: 0 }}
+            transition={{ duration: 0.8, delay: 0.5, ease: [0.2, 0.65, 0.3, 0.9] }}
+          >
             {ROLE_LINE2}
             <sup>—02</sup>
-          </span>
+          </motion.span>
         </h1>
 
         <div className="footrow rise" style={{ animationDelay: "0.7s" }}>
@@ -319,11 +351,16 @@ export default function Home() {
 
         <div className="list">
           {PROJECTS.map((p, i) => (
-            <a
+            <motion.a
               className="row reveal"
               href={p.href}
               key={p.name}
               aria-label={p.name}
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.5, delay: i * 0.1, ease: [0.2, 0.65, 0.3, 0.9] }}
+              whileHover={{ x: 8 }}
             >
               <div className="num">{String(i + 1).padStart(2, "0")}</div>
               <div className="name">{p.name}</div>
@@ -348,7 +385,7 @@ export default function Home() {
                 </svg>
               </div>
               <div className="meta-year">{p.year}</div>
-            </a>
+            </motion.a>
           ))}
         </div>
       </section>
@@ -389,11 +426,40 @@ export default function Home() {
       {/* ─── CONTACT ─── */}
       <section className="contact" id="contact">
         <div className="big reveal">
-          Let’s build
+          <motion.span
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: [0.2, 0.65, 0.3, 0.9] }}
+          >
+            Let's build
+          </motion.span>
           <br />
-          something
+          <motion.span
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1, ease: [0.2, 0.65, 0.3, 0.9] }}
+          >
+            something
+          </motion.span>
           <br />
-          <em>quietly</em> good.
+          <motion.em
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2, ease: [0.2, 0.65, 0.3, 0.9] }}
+          >
+            quietly
+          </motion.em>
+          <motion.span
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3, ease: [0.2, 0.65, 0.3, 0.9] }}
+          >
+            {' '}good.
+          </motion.span>
         </div>
         <div className="right">
           <MagneticLink className="email link-u reveal" href={`mailto:${EMAIL}`}>

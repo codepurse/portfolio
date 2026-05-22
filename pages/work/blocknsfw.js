@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import {
@@ -86,21 +87,41 @@ export default function BlockNSFWCase() {
 
       {/* ─── HEADER ─── */}
       <header className="case-hero">
-        <div className="case-eyebrow rise" style={{ animationDelay: "0.05s" }}>
+        <motion.div
+          className="case-eyebrow rise"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.05 }}
+        >
           ← <a className="link-u" href="/#work">Back to Work</a> &nbsp; / &nbsp; Case Study 01
-        </div>
+        </motion.div>
 
-        <h1 className="case-title rise" style={{ animationDelay: "0.2s" }}>
+        <motion.h1
+          className="case-title rise"
+          initial={{ opacity: 0, y: 30, rotateX: -15 }}
+          animate={{ opacity: 1, y: 0, rotateX: 0 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: [0.2, 0.65, 0.3, 0.9] }}
+        >
           BlockNSFW<span className="amp">.</span>
-        </h1>
+        </motion.h1>
 
-        <p className="case-sub rise" style={{ animationDelay: "0.4s" }}>
+        <motion.p
+          className="case-sub rise"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4, ease: [0.2, 0.65, 0.3, 0.9] }}
+        >
           A <em>privacy-first</em> content filter for Firefox — blocks adult
           domains, scans page heuristics, and optionally classifies explicit
           imagery. All locally, no telemetry, no accounts.
-        </p>
+        </motion.p>
 
-        <div className="case-meta rise" style={{ animationDelay: "0.6s" }}>
+        <motion.div
+          className="case-meta rise"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.6, ease: [0.2, 0.65, 0.3, 0.9] }}
+        >
           <div><span className="k">Role</span><span className="v">Design · Engineering · Ship</span></div>
           <div><span className="k">Year</span><span className="v">2025 — Present</span></div>
           <div><span className="k">Platform</span><span className="v">Firefox · Android · Chrome</span></div>
@@ -124,7 +145,7 @@ export default function BlockNSFWCase() {
               View on Chrome Web Store ↗
             </a>
           </div>
-        </div>
+        </motion.div>
       </header>
 
       {/* ─── STATS ─── */}
