@@ -120,7 +120,7 @@ export default function EverbibleCase() {
               View on Google Play ↗
             </a>
           </div>
-        </div>
+        </motion.div>
       </header>
 
       {/* ─── STATS ─── */}
