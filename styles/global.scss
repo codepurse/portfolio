@@ -1436,6 +1436,29 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: non
         color: var(--ink);
       }
     }
+
+    .gh-stats {
+      display: flex;
+      flex-direction: row !important;
+      align-items: flex-end;
+      gap: 18px;
+
+      .gh-stat {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-family: var(--f-display);
+        font-weight: 500;
+        font-size: 15px;
+        color: var(--ink);
+
+        svg {
+          width: 16px;
+          height: 16px;
+          color: var(--ink-mute);
+        }
+      }
+    }
   }
 }
 

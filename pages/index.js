@@ -27,7 +27,7 @@ const TAGLINE = (
     blending editorial restraint with engineered precision.
   </>
 );
-const EMAIL = "alfonlabadan@gmail.com";
+const EMAIL = "support@monolab.dev";
 
 // Edit this monthly — the rest of the block stays the same.
 const NOW_UPDATED = "April 2026";
@@ -59,6 +59,13 @@ const NOW = {
 };
 
 const PROJECTS = [
+  {
+    name: "SEOCore",
+    desc: "An enterprise-grade, multi-threaded SEO crawler and rule engine. Concurrent crawling, declarative audit rules, link graph analysis, AI visibility auditing, and production-ready reporting — built as a TypeScript monorepo.",
+    stack: ["TypeScript", "Node.js", "Playwright", "Nx"],
+    year: "2026",
+    href: "/work/seocore",
+  },
   {
     name: "WebTrace",
     desc: "A privacy-first browser history manager for Chrome & Firefox. Search pages, manage favorites, restore closed tabs, review search queries, downloads, clipboard history, bookmarks, and extension activity — all local.",
@@ -466,7 +473,12 @@ export default function Home() {
             {EMAIL}
           </MagneticLink>
           <div className="socials reveal">
-            <a className="link-u" href="#">
+            <a
+              className="link-u"
+              href="https://github.com/codepurse"
+              target="_blank"
+              rel="noreferrer"
+            >
               <span className="dash">—</span> GitHub
             </a>
             <a className="link-u" href="#">
@@ -477,6 +489,14 @@ export default function Home() {
             </a>
             <a className="link-u" href="#">
               <span className="dash">—</span> LinkedIn
+            </a>
+            <a
+              className="link-u bmac"
+              href="https://buymeacoffee.com/monolab.co"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span className="dash">—</span> Buy me a coffee
             </a>
           </div>
         </div>

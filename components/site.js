@@ -45,6 +45,29 @@ export function useScrollReveal() {
   }, []);
 }
 
+export function useGitHubStats(owner = "codepurse", repo = "SEOCORE") {
+  const [stats, setStats] = useState(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    let cancelled = false;
+
+    fetch(`/api/github-stats?owner=${owner}&repo=${repo}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (cancelled) return;
+        setStats(data);
+      })
+      .catch(() => {});
+
+    return () => {
+      cancelled = true;
+    };
+  }, [owner, repo]);
+
+  return stats;
+}
+
 /* ────────────────────────────────────────────────────────────
    CountUp — animated number, fires when in view
    ──────────────────────────────────────────────────────────── */
@@ -308,7 +331,16 @@ export function SiteFooter() {
   return (
     <footer className="foot">
       <div>© {new Date().getFullYear()} — {NAME}</div>
-      <div className="center">Designed &amp; built in-house</div>
+      <div className="center">
+        <a
+          className="link-u"
+          href="https://buymeacoffee.com/monolab.co"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Buy me a coffee
+        </a>
+      </div>
       <div className="right">v04 · {time || "—"}</div>
     </footer>
   );

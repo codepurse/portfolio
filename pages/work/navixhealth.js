@@ -294,16 +294,16 @@ export default function NavixHealthCase() {
       </section>
 
       <section className="next-project">
-        <div className="np-eyebrow reveal">Back to the Top</div>
-        <a className="np-link reveal" href="/work/blocknsfw">
-          <span className="np-name">BlockNSFW</span>
+        <div className="np-eyebrow reveal">Next Case Study</div>
+        <a className="np-link reveal" href="/work/seocore">
+          <span className="np-name">SEOCore</span>
           <span className="np-arrow" aria-hidden>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path d="M5 19L19 5M19 5H8M19 5V16" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </span>
         </a>
-        <div className="np-meta reveal">2025 · Privacy-first content filter</div>
+        <div className="np-meta reveal">2026 · Enterprise SEO crawler & rule engine</div>
       </section>
 
       <SiteFooter />
