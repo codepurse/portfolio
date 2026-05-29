@@ -83,6 +83,11 @@ export function CountUp({
   const ref = useRef(null);
   const started = useRef(false);
 
+  // Reset started flag when value changes so animation can re-trigger
+  useEffect(() => {
+    started.current = false;
+  }, [value]);
+
   useEffect(() => {
     if (typeof window === "undefined" || !ref.current) return;
 

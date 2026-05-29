@@ -23,7 +23,13 @@ const FALLBACK = {
 };
 
 function useCombinedStats() {
-  const [stats, setStats] = useState(FALLBACK);
+  const [stats, setStats] = useState({
+    amoUsers: 0,
+    chromeUsers: 0,
+    rating: 0,
+    reviews: 0,
+    loading: true,
+  });
 
   useEffect(() => {
     if (globalThis.window === undefined) return;
@@ -54,6 +60,7 @@ function useCombinedStats() {
             typeof amo?.reviews === "number" && amo.reviews > 0
               ? amo.reviews
               : FALLBACK.reviews,
+          loading: false,
         });
       }
     );
